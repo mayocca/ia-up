@@ -1,5 +1,10 @@
-numpy
-pandas
+fastapi
+uvicorn
+python-multipart
 torch
-scikit-learn
-jupyter
+torchvision
+pytesseract
+transformers
+protobuf
+Pillow
+python-dotenv

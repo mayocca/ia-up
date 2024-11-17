@@ -1,12 +1,17 @@
 # IA-UP
 
-Un proyecto desarrollado con Python 3.13 para la asignatura Inteligencia Artificial de la Universidad de Palermo.
+Un proyecto desarrollado con Python 3.12 para la asignatura Inteligencia Artificial de la Universidad de Palermo.
+
+## Descripción
+
+Este proyecto implementa una API REST utilizando FastAPI que procesa imágenes de facturas y tickets utilizando el modelo de IA `impira/layoutlm-invoices`. La API extrae información relevante como montos, fechas y detalles del vendedor, devolviendo un JSON estandarizado.
 
 ## Requisitos
 
-- Python 3.13
-- pip (viene incluido con Python 3.13)
-- módulo venv (viene incluido con Python 3.13)
+- Python 3.12
+- pip (viene incluido con Python 3.12)
+- módulo venv (viene incluido con Python 3.12)
+- [tesseract](https://github.com/UB-Mannheim/tesseract)
 
 ## Instalación
 
@@ -17,7 +22,13 @@ git clone https://github.com/mayocca/ia-up.git
 cd ia-up
 ```
 
-2. Crear un entorno virtual
+2. Copiar el archivo `.env.example` a `.env` y setear las variables de entorno
+
+```bash
+cp .env.example .env
+```
+
+3. Crear un entorno virtual
 
 ```bash
 # En Windows
@@ -25,36 +36,57 @@ python -m venv venv
 venv\Scripts\activate
 
 # En macOS/Linux
-python3.13 -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate
 ```
 
-3. Instalar dependencias
+4. Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Problemas Comunes
+## Uso
 
-### Versión de Python
-
-Asegúrate de tener Python 3.13 instalado:
+Para iniciar el servidor:
 
 ```bash
-python --version  # Debería mostrar Python 3.13.x
+uvicorn src.main:app --reload
 ```
 
-### Entorno Virtual
+La API estará disponible en `http://localhost:8000`
 
-Si aparece el error "venv not found" (entorno virtual no encontrado):
+### Endpoints
 
-```bash
-# Windows
-py -3.13 -m venv venv
+#### POST /scan-invoice/
 
-# macOS/Linux
-python3.13 -m venv venv
+Endpoint para procesar imágenes de facturas.
+
+**Solicitud:**
+
+- Método: POST
+- Content-Type: multipart/form-data
+- Cuerpo: archivo (imagen de factura)
+
+**Respuesta:**
+
+```json
+{
+  "invoice_number": "string",
+  "date": "string",
+  "total_amount": 0.0,
+  "vendor": "string",
+  "items": [
+    {
+      "description": "string",
+      "quantity": 0,
+      "unit_price": 0.0,
+      "total": 0.0
+    }
+  ],
+  "tax": 0.0,
+  "currency": "string"
+}
 ```
 
 ## Solución de Problemas Comunes
@@ -70,15 +102,17 @@ python -m pip install --upgrade pip
 
 ```bash
 # Instalar dependencias una por una
-pip install numpy
-pip install pandas
-pip install torch
+pip install fastapi
+pip install uvicorn
+pip install python-multipart
+pip install transformers
+pip install Pillow
+pip install python-dotenv
 ```
 
-### Si Jupyter no inicia:
+## Documentación de la API
 
-```bash
-# Reinstalar Jupyter
-pip uninstall jupyter
-pip install jupyter
-```
+Una vez que el servidor esté corriendo, puedes acceder a:
+
+- Documentación interactiva: `http://localhost:8000/docs`
+- Documentación OpenAPI: `http://localhost:8000/redoc`
