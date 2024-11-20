@@ -1,6 +1,6 @@
-# IA-UP
+# Spend-a-lot
 
-Un proyecto desarrollado con Python 3.12 para la asignatura Inteligencia Artificial de la Universidad de Palermo.
+Un proyecto desarrollado con Python 3.12 para la asignatura Inteligencia Artificial de la Universidad de Palermo. Este proyecto es una API REST que procesa imágenes de facturas y tickets utilizando el modelo de Hugging Face `impira/layoutlm-invoices`.
 
 ## Descripción
 
@@ -87,27 +87,6 @@ Endpoint para procesar imágenes de facturas.
   "tax": 0.0,
   "currency": "string"
 }
-```
-
-## Solución de Problemas Comunes
-
-### Si pip no funciona:
-
-```bash
-# Actualizar pip
-python -m pip install --upgrade pip
-```
-
-### Si hay problemas con las dependencias:
-
-```bash
-# Instalar dependencias una por una
-pip install fastapi
-pip install uvicorn
-pip install python-multipart
-pip install transformers
-pip install Pillow
-pip install python-dotenv
 ```
 
 ## Documentación de la API
